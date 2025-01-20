@@ -9,6 +9,7 @@
 - **Multi-Puzzle Mastery**: From grids to games, solvAIt flexes its smarts on diverse challenges.  
 - **Interactive & Fun**: Engage with puzzles like never before via a sleek and user-friendly interface.  
 
+<!--
 ### Features 🚀  
 - **Killer Sudoku Solver**: Master those tricky cages and dominate the grid.  
 - **Sokoban Genius**: Push, plan, and solve like a box-moving wizard.  
@@ -29,3 +30,4 @@ uvicorn app.main:app --reload
 ```
 
 Demo Coming Soon! 🚧 Stay tuned for live hosting!
+-->
