@@ -3,19 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Puzzle Solver</title>
+    <title>Killer Sudoku Solver</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
     <header>
-        <h1>AI Puzzle Solver</h1>
+        <h1>Killer Sudoku Solver</h1>
     </header>
     <main>
-        <p id="welcome-message">Welcome! Let's test some interactivity.</p>
-        <button id="test-button">Click me!</button>
-    </main>
+        <h2>Input Your Puzzle</h2>
+        <!-- Sudoku Grid Input -->
+        <table id="sudoku-grid">
+            <thead>
+                <tr>
+                    <th></th> <!-- Empty corner cell -->
+                    <!-- Column Headers -->
+                    <th>A</th><th>B</th><th>C</th>
+                    <th>D</th><th>E</th><th>F</th>
+                    <th>G</th><th>H</th><th>I</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows generated via JavaScript -->
+            </tbody>
+        </table>
+    
+        <!-- Add Cage Button -->
+        <button id="add-cage-button">Add Cage</button>
+    
+        <!-- Results -->
+        <div id="results">
+            <h3>Solution</h3>
+            <pre id="solution-output">No solution yet.</pre>
+        </div>
+    </main>    
     <footer>
-        <p>&copy; 2025 AI Puzzle Solver</p>
+        <p>&copy; 2025 Killer Sudoku Solver</p>
     </footer>
     <script src="/static/app.js"></script>
 </body>
