@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gridStore } from '$lib/stores/grid';
+	import { gridStore, conflicts } from '$lib/stores/grid';
 
 	const rows = Array(9).fill(0);
 	const cols = Array(9).fill(0);
@@ -8,6 +8,14 @@
 		if ($gridStore.isEditMode) {
 			if ($gridStore.isNewCageMode) {
 				gridStore.selectCell(r, c);
+			} else {
+				// If clicking an existing cage cell, we might want to edit/remove it later
+				const cageIndex = $gridStore.cages.findIndex((cage) =>
+					cage.cells.some((cell) => cell[0] === r && cell[1] === c)
+				);
+				if (cageIndex !== -1 && confirm('Remove this cage?')) {
+					gridStore.removeCage(cageIndex);
+				}
 			}
 		}
 	}
@@ -28,7 +36,15 @@
 			cage.cells.some((cell) => cell[0] === r && cell[1] === c)
 		);
 		if (cageIndex === -1) return '';
-		const colors = ['#FFD700', '#FFA07A', '#20B2AA', '#9370DB', '#FF6347', '#7B68EE', '#90EE90'];
+		const colors = [
+			'rgba(255, 215, 0, 0.3)', // Gold
+			'rgba(255, 160, 122, 0.3)', // Salmon
+			'rgba(32, 178, 170, 0.3)', // Teal
+			'rgba(147, 112, 219, 0.3)', // Purple
+			'rgba(255, 99, 71, 0.3)', // Tomato
+			'rgba(123, 104, 238, 0.3)', // SlateBlue
+			'rgba(144, 238, 144, 0.3)' // LightGreen
+		];
 		return colors[cageIndex % colors.length];
 	}
 
@@ -57,6 +73,10 @@
 		if (meta.strategy) return `strategy-${meta.strategy}`;
 		return '';
 	}
+
+	function isConflict(r: number, c: number) {
+		return $conflicts.has(`${r},${c}`);
+	}
 </script>
 
 <div class="grid-container">
@@ -68,6 +88,8 @@
 						<td
 							style="background-color: {getCellCageColor(r, c)}"
 							class:selected={isSelected(r, c)}
+							class:conflict={isConflict(r, c)}
+							class:edit-mode={$gridStore.isEditMode}
 							class={getCellStrategyClass(r, c)}
 							on:click={() => handleCellClick(r, c)}
 						>
@@ -80,7 +102,7 @@
 								max="9"
 								value={$gridStore.grid[r][c] || ''}
 								on:input={(e) => handleInput(r, c, e)}
-								disabled={$gridStore.isSolving || ($gridStore.isEditMode && $gridStore.isNewCageMode)}
+								disabled={$gridStore.isSolving || $gridStore.isEditMode}
 							/>
 						</td>
 					{/each}
@@ -101,19 +123,28 @@
 		border: 2px solid #333;
 	}
 	td {
-		width: 40px;
-		height: 40px;
+		width: 44px;
+		height: 44px;
 		border: 1px solid #ccc;
 		position: relative;
 		padding: 0;
+		transition: background-color 0.2s, box-shadow 0.2s;
+		cursor: pointer;
+	}
+	td.edit-mode:hover {
+		background-color: rgba(0, 123, 255, 0.1) !important;
 	}
 	input {
 		width: 100%;
 		height: 100%;
 		border: none;
 		text-align: center;
-		font-size: 1.2rem;
+		font-size: 1.3rem;
 		background: transparent;
+	}
+	/* Ensure input doesn't block click in edit mode */
+	td.edit-mode input {
+		pointer-events: none;
 	}
 	input:focus {
 		outline: none;
@@ -127,16 +158,26 @@
 		border-right: 2px solid #333;
 	}
 	.selected {
-		outline: 3px solid #007bff;
+		outline: 3px solid #007bff !important;
+		outline-offset: -3px;
 		z-index: 10;
+		background-color: rgba(0, 123, 255, 0.4) !important;
+	}
+	.conflict {
+		background-color: rgba(220, 53, 69, 0.3) !important;
+	}
+	.conflict input {
+		color: #dc3545 !important;
 	}
 	.cage-sum {
 		position: absolute;
-		top: 2px;
+		top: 1px;
 		left: 2px;
-		font-size: 0.6rem;
-		color: #333;
+		font-size: 0.65rem;
+		font-weight: bold;
+		color: #444;
 		pointer-events: none;
+		z-index: 5;
 	}
 	/* Strategy-based coloring */
 	td.user-input input {
