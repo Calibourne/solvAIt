@@ -1,3 +1,7 @@
+<script lang="ts">
+	import { base } from '$app/paths';
+</script>
+
 <header>
 	<h1>solvAIt</h1>
 	<p>AI-powered puzzle-solving powerhouse</p>
@@ -7,7 +11,7 @@
 	<div class="card">
 		<h2>Killer Sudoku</h2>
 		<p>Logic-based masterpiece of cage constraints and combinatorial brilliance.</p>
-		<a href="/killer-sudoku">Open Solver</a>
+		<a href="{base}/killer-sudoku">Open Solver</a>
 	</div>
 
 	<div class="card disabled">
