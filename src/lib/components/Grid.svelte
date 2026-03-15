@@ -50,6 +50,13 @@
 		);
 		return cage?.sum;
 	}
+
+	function getCellStrategyClass(r: number, c: number) {
+		const meta = $gridStore.metadata[r][c];
+		if (meta.isUserInput) return 'user-input';
+		if (meta.strategy) return `strategy-${meta.strategy}`;
+		return '';
+	}
 </script>
 
 <div class="grid-container">
@@ -61,6 +68,7 @@
 						<td
 							style="background-color: {getCellCageColor(r, c)}"
 							class:selected={isSelected(r, c)}
+							class={getCellStrategyClass(r, c)}
 							on:click={() => handleCellClick(r, c)}
 						>
 							{#if isFirstInCage(r, c)}
@@ -130,6 +138,21 @@
 		color: #333;
 		pointer-events: none;
 	}
+	/* Strategy-based coloring */
+	td.user-input input {
+		font-weight: bold;
+		color: #000;
+	}
+	td.strategy-heuristic input {
+		color: #28a745; /* Green */
+	}
+	td.strategy-csp input {
+		color: #007bff; /* Blue */
+	}
+	td.strategy-backtracking input {
+		color: #6f42c1; /* Purple */
+	}
+
 	/* Remove arrows from number input */
 	input::-webkit-outer-spin-button,
 	input::-webkit-inner-spin-button {
