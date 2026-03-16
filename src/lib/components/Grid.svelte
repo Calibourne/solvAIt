@@ -144,6 +144,12 @@
 		background: transparent;
 		color: var(--color-text);
 		font-weight: 900;
+		font-family: var(--font-main);
+	}
+	/* Detective Theme specific stamp effect */
+	.theme-pop input {
+		transform: rotate(-2deg);
+		filter: contrast(1.2) opacity(0.8);
 	}
 	/* Ensure input doesn't block click in edit mode */
 	td.edit-mode input {
@@ -160,11 +166,20 @@
 	td:nth-child(3n) {
 		border-right: var(--border-weight) solid var(--color-text);
 	}
+	/* Tron theme specific double border */
+	.theme-synth table {
+		border: 4px double var(--color-primary);
+	}
 	.selected {
 		outline: var(--border-weight) solid var(--color-primary) !important;
 		outline-offset: calc(var(--border-weight) * -1);
 		z-index: 10;
 		background-color: rgba(179, 0, 0, 0.2) !important;
+	}
+	/* Matrix theme specific selection */
+	.theme-matrix .selected {
+		background-color: rgba(0, 255, 65, 0.2) !important;
+		outline-color: var(--color-primary) !important;
 	}
 	.conflict {
 		background-color: rgba(220, 53, 69, 0.3) !important;

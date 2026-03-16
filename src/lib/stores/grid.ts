@@ -19,6 +19,7 @@ interface GridState {
 	stats: { timeMs: number; iterations: number } | null;
 	lastStep: Step | null;
     showSumModal: boolean;
+    editingCageIndex: number | null;
 }
 
 const createInitialGrid = () => Array(9).fill(0).map(() => Array(9).fill(0));
@@ -39,7 +40,8 @@ const createInitialState = (): GridState => ({
 	visualize: true,
 	stats: null,
 	lastStep: null,
-    showSumModal: false
+    showSumModal: false,
+    editingCageIndex: null
 });
 
 function createGridStore() {
@@ -53,14 +55,22 @@ function createGridStore() {
 				s.metadata[r][c] = { isUserInput: val !== 0, strategy: null };
 				return { ...s };
 			}),
-		toggleEditMode: () => update((s) => ({ ...s, isEditMode: !s.isEditMode, isNewCageMode: false, selectedCells: [], showSumModal: false })),
+		toggleEditMode: () => update((s) => ({ 
+            ...s, 
+            isEditMode: !s.isEditMode, 
+            isNewCageMode: false, 
+            selectedCells: [], 
+            showSumModal: false,
+            editingCageIndex: null 
+        })),
 		toggleNewCageMode: () => update((s) => {
             const nextMode = !s.isNewCageMode;
             return {
                 ...s,
                 isNewCageMode: nextMode,
                 selectedCells: nextMode ? s.selectedCells : [],
-                showSumModal: false
+                showSumModal: false,
+                editingCageIndex: null
             };
         }),
 		selectCell: (r: number, c: number) =>
@@ -79,10 +89,18 @@ function createGridStore() {
 				isNewCageMode: false,
                 showSumModal: false
 			})),
+        updateCage: (index: number, sum: number, cells?: Cell[]) => update(s => {
+            const nextCages = [...s.cages];
+            nextCages[index] = { 
+                sum, 
+                cells: cells || nextCages[index].cells 
+            };
+            return { ...s, cages: nextCages, editingCageIndex: null };
+        }),
         removeCage: (index: number) => update(s => {
             const nextCages = [...s.cages];
             nextCages.splice(index, 1);
-            return { ...s, cages: nextCages };
+            return { ...s, cages: nextCages, editingCageIndex: null };
         }),
 		reset: () => set(createInitialState()),
         resetSolution: () => update(s => {
@@ -131,7 +149,8 @@ function createGridStore() {
                     isSolving: false
                 };
 			}),
-        setShowSumModal: (show: boolean) => update(s => ({ ...s, showSumModal: show }))
+        setShowSumModal: (show: boolean) => update(s => ({ ...s, showSumModal: show, editingCageIndex: show ? s.editingCageIndex : null })),
+        setEditingCageIndex: (index: number | null) => update(s => ({ ...s, editingCageIndex: index, selectedCells: index !== null ? [...s.cages[index].cells] : [] }))
 	};
 }
 

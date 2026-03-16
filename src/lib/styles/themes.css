@@ -9,41 +9,41 @@
 	--theme-hub-font: system-ui, -apple-system, sans-serif;
 	--theme-hub-effect: 0 4px 20px rgba(0, 0, 0, 0.08);
 
-	/* Playful Pop (Sudoku) */
-	--theme-pop-bg: #ffde59;
-	--theme-pop-primary: #b30000;
+	/* Detective Noir (Sudoku) */
+	--theme-pop-bg: #e5e5e1; /* Aged Paper */
+	--theme-pop-primary: #b30000; /* Bloody Red */
 	--theme-pop-surface: #ffffff;
-	--theme-pop-text: #000000;
+	--theme-pop-text: #2c2c2c; /* Gritty Gray */
 	--theme-pop-border-weight: 3px;
-	--theme-pop-border-radius: 12px;
-	--theme-pop-font: 'Inter', system-ui, sans-serif;
-	--theme-pop-effect: 6px 6px 0px rgba(0, 0, 0, 0.1);
+	--theme-pop-border-radius: 2px; /* Sharp, like tape */
+	--theme-pop-font: 'Courier Prime', 'Courier New', monospace;
+	--theme-pop-effect: inset 0 0 50px rgba(0, 0, 0, 0.05);
 	--theme-pop-cage-1: rgba(179, 0, 0, 0.45);
-	--theme-pop-cage-2: rgba(0, 123, 255, 0.45);
-	--theme-pop-cage-3: rgba(40, 167, 69, 0.45);
-	--theme-pop-cage-4: rgba(255, 193, 7, 0.45);
+	--theme-pop-cage-2: rgba(44, 44, 44, 0.45);
+	--theme-pop-cage-3: rgba(0, 0, 0, 0.3);
+	--theme-pop-cage-4: rgba(179, 0, 0, 0.25);
 
-	/* Synthwave (Sokoban) */
-	--theme-synth-bg: #050510;
-	--theme-synth-primary: #00ffff;
-	--theme-synth-surface: #050510;
-	--theme-synth-text: #00ffff;
-	--theme-synth-border-weight: 1px;
+	/* TRON Legacy (Sokoban) */
+	--theme-synth-bg: #020410; /* Deepest Navy */
+	--theme-synth-primary: #00d2ff; /* Neon Blue */
+	--theme-synth-surface: #020410;
+	--theme-synth-text: #00d2ff;
+	--theme-synth-border-weight: 2px;
 	--theme-synth-border-radius: 0px;
 	--theme-synth-font: 'Orbitron', sans-serif;
-	--theme-synth-effect: 0 0 15px rgba(0, 255, 255, 0.4);
-	--theme-synth-accent: #ff00ff;
+	--theme-synth-effect: 0 0 20px rgba(0, 210, 255, 0.4);
+	--theme-synth-accent: #ff9d00; /* Neon Orange */
 
-	/* Matrix (GoL) */
+	/* Ghost in the Shell / Matrix (GoL) */
 	--theme-matrix-bg: #000000;
-	--theme-matrix-primary: #00ff00;
+	--theme-matrix-primary: #00ff41; /* Matrix Green */
 	--theme-matrix-surface: #000000;
-	--theme-matrix-text: #00ff00;
+	--theme-matrix-text: #00ff41;
 	--theme-matrix-border-weight: 1px;
 	--theme-matrix-border-radius: 0px;
 	--theme-matrix-font: 'JetBrains Mono', 'Courier New', monospace;
-	--theme-matrix-effect: 0 0 8px rgba(0, 255, 0, 0.5);
-	--theme-matrix-dim: #003300;
+	--theme-matrix-effect: 0 0 8px rgba(0, 255, 65, 0.5);
+	--theme-matrix-dim: #003b00;
 }
 
 .theme-hub {
@@ -75,7 +75,7 @@
 	--color-text: var(--theme-synth-text);
 	--border-weight: var(--theme-synth-border-weight);
 	--border-radius: var(--theme-synth-border-radius);
-	--font-main: var(--theme-synth-font);
+	--font-main: var(--font-main); /* Layout sets it to Orbitron via page class */
 	--effect-primary: var(--theme-synth-effect);
 }
 

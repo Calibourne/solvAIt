@@ -200,10 +200,11 @@
 		margin-bottom: 12px;
 		font-size: 0.85rem;
 		text-transform: uppercase;
-		letter-spacing: 0.1em;
+		letter-spacing: 0.15em;
 		color: var(--color-text);
-		opacity: 0.6;
+		opacity: 0.7;
 		font-weight: 900;
+		font-family: var(--font-main);
 	}
 	button {
 		display: block;
@@ -213,12 +214,14 @@
 		cursor: pointer;
 		border: var(--border-weight) solid var(--color-text);
 		background: var(--color-surface);
-		border-radius: calc(var(--border-radius) / 2);
+		border-radius: var(--border-radius);
 		font-weight: 900;
 		font-size: 0.9rem;
 		transition: all 0.2s;
 		text-align: center;
 		color: var(--color-text);
+		font-family: var(--font-main);
+		text-transform: uppercase;
 	}
 	button:hover:not(:disabled) {
 		background: var(--color-bg);
@@ -251,11 +254,35 @@
 	}
 	select {
 		width: 100%;
-		padding: 10px;
+		padding: 12px;
 		margin-bottom: 12px;
-		border-radius: calc(var(--border-radius) / 2);
+		border-radius: var(--border-radius);
 		border: var(--border-weight) solid var(--color-text);
 		background: var(--color-surface);
+		color: var(--color-text);
+		font-weight: 900;
+		font-family: var(--font-main);
+		appearance: none;
+		background-image: linear-gradient(45deg, transparent 50%, var(--color-text) 50%),
+			linear-gradient(135deg, var(--color-text) 50%, transparent 50%);
+		background-position: calc(100% - 20px) calc(1em + 4px), calc(100% - 15px) calc(1em + 4px);
+		background-size: 5px 5px, 5px 5px;
+		background-repeat: no-repeat;
+		cursor: pointer;
+		transition: all 0.2s;
+		text-transform: uppercase;
+	}
+	select:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 2px 2px 0 var(--color-text);
+	}
+	select:focus {
+		outline: none;
+		border-color: var(--color-primary);
+	}
+	option {
+		background: var(--color-surface);
+		color: var(--color-text);
 		font-weight: bold;
 	}
 	.checkbox-label {
@@ -294,6 +321,7 @@
 		font-size: 0.95rem;
 		color: var(--color-text);
 		font-weight: bold;
+		font-family: var(--font-main);
 	}
 
 	/* Modal Styles */

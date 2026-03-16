@@ -3,10 +3,10 @@
 	import { page } from '$app/stores';
 
 	const games = [
-		{ id: 'hub', path: '/', label: 'HUB', theme: 'theme-hub' },
-		{ id: 'sudoku', path: '/killer-sudoku', label: 'SDK', theme: 'theme-pop' },
-		{ id: 'sokoban', path: '/sokoban', label: 'SKB', theme: 'theme-synth' },
-		{ id: 'gol', path: '/gol', label: 'GOL', theme: 'theme-matrix' }
+		{ id: 'hub', path: '/', label: 'REAL', theme: 'theme-hub', title: 'Reality Select' },
+		{ id: 'sudoku', path: '/killer-sudoku', label: 'NOIR', theme: 'theme-pop', title: 'Murder Mystery' },
+		{ id: 'sokoban', path: '/sokoban', label: 'TRON', theme: 'theme-synth', title: 'Tron Protocol' },
+		{ id: 'gol', path: '/gol', label: 'SHELL', theme: 'theme-matrix', title: 'Ghost in the Shell' }
 	];
 
 	function isActive(path: string) {
@@ -23,83 +23,117 @@
 				href={game.path}
 				class="nav-item {game.theme}"
 				class:active={isActive(game.path)}
-				title={game.label}
+				title={game.title}
 			>
 				{game.label}
 			</a>
 		{/each}
 	</div>
+	<div class="version">V2.6.3</div>
 </nav>
 
 <style>
 	.sidebar {
 		width: 70px;
 		height: 100vh;
-		background: #111;
+		background: #000;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 20px 0;
+		padding: 30px 0;
 		box-sizing: border-box;
 		position: fixed;
 		left: 0;
 		top: 0;
 		z-index: 100;
-		border-right: 1px solid #333;
+		border-right: 1px solid #222;
 	}
 	.logo {
 		font-weight: 900;
-		font-size: 0.7rem;
+		font-size: 0.65rem;
 		color: #fff;
-		margin-bottom: 40px;
-		letter-spacing: 0.1em;
+		margin-bottom: 50px;
+		letter-spacing: 0.2em;
 		text-transform: uppercase;
+		opacity: 0.5;
 	}
 	.nav-items {
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 25px;
 	}
 	.nav-item {
-		width: 44px;
-		height: 44px;
+		width: 46px;
+		height: 46px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		text-decoration: none;
-		font-size: 0.75rem;
+		font-size: 0.65rem;
 		font-weight: 900;
-		border-radius: 8px;
-		transition: all 0.2s;
+		border-radius: 4px;
+		transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		border: 2px solid transparent;
+		letter-spacing: 0.05em;
 	}
 
 	/* Theme Specific Nav Icons */
 	.theme-hub {
-		background: #333;
-		color: #fff;
+		background: #1a1a1a;
+		color: #888;
+		border-color: #333;
 	}
 	.theme-pop {
-		background: #ffde59;
-		color: #000;
-		border-color: #b30000;
+		background: #e5e5e1;
+		color: #2c2c2c;
+		border-color: #000;
+		font-family: 'Courier Prime', 'Courier New', monospace;
 	}
 	.theme-synth {
-		background: #050510;
-		color: #00ffff;
-		border-color: #00ffff;
+		background: #020410;
+		color: #00d2ff;
+		border-color: #00d2ff;
+		font-family: 'Orbitron', sans-serif;
 	}
 	.theme-matrix {
 		background: #000;
-		color: #00ff00;
-		border-color: #00ff00;
+		color: #00ff41;
+		border-color: #00ff41;
+		font-family: 'JetBrains Mono', monospace;
 	}
 
 	.nav-item:hover {
-		transform: scale(1.1);
+		transform: scale(1.15) rotate(2deg);
 	}
+	
 	.nav-item.active {
-		box-shadow: 0 0 15px currentColor;
 		transform: scale(1.1);
+		z-index: 2;
+	}
+
+	.theme-pop.active {
+		box-shadow: 4px 4px 0 #b30000;
+		border-width: 3px;
+	}
+	.theme-synth.active {
+		box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+		background: rgba(0, 210, 255, 0.1);
+	}
+	.theme-matrix.active {
+		box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+		text-shadow: 0 0 5px var(--color-primary);
+	}
+	.theme-hub.active {
+		background: #fff;
+		color: #000;
+		border-color: #fff;
+	}
+
+	.version {
+		margin-top: auto;
+		font-size: 0.5rem;
+		font-family: monospace;
+		opacity: 0.3;
+		letter-spacing: 0.1em;
 	}
 </style>
