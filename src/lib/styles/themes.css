@@ -1,0 +1,91 @@
+:root {
+	/* Default / Hub Theme */
+	--theme-hub-bg: #f8f9fa;
+	--theme-hub-primary: #007bff;
+	--theme-hub-surface: #ffffff;
+	--theme-hub-text: #212529;
+	--theme-hub-border-weight: 1px;
+	--theme-hub-border-radius: 8px;
+	--theme-hub-font: system-ui, -apple-system, sans-serif;
+	--theme-hub-effect: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+	/* Detective Noir (Sudoku) */
+	--theme-pop-bg: #e5e5e1; /* Aged Paper */
+	--theme-pop-primary: #b30000; /* Bloody Red */
+	--theme-pop-surface: #ffffff;
+	--theme-pop-text: #2c2c2c; /* Gritty Gray */
+	--theme-pop-border-weight: 3px;
+	--theme-pop-border-radius: 2px; /* Sharp, like tape */
+	--theme-pop-font: 'Courier Prime', 'Courier New', monospace;
+	--theme-pop-effect: inset 0 0 50px rgba(0, 0, 0, 0.05);
+	--theme-pop-cage-1: rgba(179, 0, 0, 0.45);
+	--theme-pop-cage-2: rgba(44, 44, 44, 0.45);
+	--theme-pop-cage-3: rgba(0, 0, 0, 0.3);
+	--theme-pop-cage-4: rgba(179, 0, 0, 0.25);
+
+	/* TRON Legacy (Sokoban) */
+	--theme-synth-bg: #020410; /* Deepest Navy */
+	--theme-synth-primary: #00d2ff; /* Neon Blue */
+	--theme-synth-surface: #020410;
+	--theme-synth-text: #00d2ff;
+	--theme-synth-border-weight: 2px;
+	--theme-synth-border-radius: 0px;
+	--theme-synth-font: 'Orbitron', sans-serif;
+	--theme-synth-effect: 0 0 20px rgba(0, 210, 255, 0.4);
+	--theme-synth-accent: #ff9d00; /* Neon Orange */
+
+	/* Ghost in the Shell / Matrix (GoL) */
+	--theme-matrix-bg: #000000;
+	--theme-matrix-primary: #00ff41; /* Matrix Green */
+	--theme-matrix-surface: #000000;
+	--theme-matrix-text: #00ff41;
+	--theme-matrix-border-weight: 1px;
+	--theme-matrix-border-radius: 0px;
+	--theme-matrix-font: 'JetBrains Mono', 'Courier New', monospace;
+	--theme-matrix-effect: 0 0 8px rgba(0, 255, 65, 0.5);
+	--theme-matrix-dim: #003b00;
+}
+
+.theme-hub {
+	--color-bg: var(--theme-hub-bg);
+	--color-primary: var(--theme-hub-primary);
+	--color-surface: var(--theme-hub-surface);
+	--color-text: var(--theme-hub-text);
+	--border-weight: var(--theme-hub-border-weight);
+	--border-radius: var(--theme-hub-border-radius);
+	--font-main: var(--theme-hub-font);
+	--effect-primary: var(--theme-hub-effect);
+}
+
+.theme-pop {
+	--color-bg: var(--theme-pop-bg);
+	--color-primary: var(--theme-pop-primary);
+	--color-surface: var(--theme-pop-surface);
+	--color-text: var(--theme-pop-text);
+	--border-weight: var(--theme-pop-border-weight);
+	--border-radius: var(--theme-pop-border-radius);
+	--font-main: var(--theme-pop-font);
+	--effect-primary: var(--theme-pop-effect);
+}
+
+.theme-synth {
+	--color-bg: var(--theme-synth-bg);
+	--color-primary: var(--theme-synth-primary);
+	--color-surface: var(--theme-synth-surface);
+	--color-text: var(--theme-synth-text);
+	--border-weight: var(--theme-synth-border-weight);
+	--border-radius: var(--theme-synth-border-radius);
+	--font-main: var(--font-main); /* Layout sets it to Orbitron via page class */
+	--effect-primary: var(--theme-synth-effect);
+}
+
+.theme-matrix {
+	--color-bg: var(--theme-matrix-bg);
+	--color-primary: var(--theme-matrix-primary);
+	--color-surface: var(--theme-matrix-surface);
+	--color-text: var(--theme-matrix-text);
+	--border-weight: var(--theme-matrix-border-weight);
+	--border-radius: var(--theme-matrix-border-radius);
+	--font-main: var(--theme-matrix-font);
+	--effect-primary: var(--theme-matrix-effect);
+}

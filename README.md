@@ -1,33 +1,42 @@
-# solvAIt 🤖🧩  
-**solvAIt** (*"Solve It AI"*) is an AI-powered puzzle-solving powerhouse designed to tackle a trio of challenges:  
-- 🟠 **Killer Sudoku**: A logic-based masterpiece of cage constraints and combinatorial brilliance.  
-- 🔵 **Sokoban**: The ultimate test of spatial reasoning and pathfinding precision.  
-- 🟢 **Conway’s Game of Life (Reverse)**: Reverse-engineering cellular automata with mind-bending creativity.  
+# sv
 
-### Why solvAIt?  
-- **AI Brilliance**: Powered by Python, solvAIt blends cutting-edge algorithms with intuitive logic.  
-- **Multi-Puzzle Mastery**: From grids to games, solvAIt flexes its smarts on diverse challenges.  
-- **Interactive & Fun**: Engage with puzzles like never before via a sleek and user-friendly interface.  
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-<!--
-### Features 🚀  
-- **Killer Sudoku Solver**: Master those tricky cages and dominate the grid.  
-- **Sokoban Genius**: Push, plan, and solve like a box-moving wizard.  
-- **Conway's Reverse Wizardry**: Watch as AI unravels the mystery of your desired final state.  
+## Creating a project
 
-### Tech Stack ⚙️  
-- **Backend**: FastAPI for high-speed, lightweight API magic.  
-- **Frontend**: Custom HTML/CSS/JavaScript for interactive, beautiful visuals.  
-- **AI Logic**: Python algorithms designed for logic, pathfinding, and creative optimization.
+If you're seeing this, you've probably already done this step. Congrats!
 
-### Ready to solvAIt?  
-Clone the repo, fire it up, and let the magic unfold:  
-```bash
-git clone https://github.com/yourusername/solvAIt.git
-cd solvAIt
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+```sh
+# create a new project
+npx sv create my-app
 ```
 
-Demo Coming Soon! 🚧 Stay tuned for live hosting!
--->
+To recreate this project with the same configuration:
+
+```sh
+# recreate this project
+npx sv@0.12.7 create --template minimal --types ts --no-install .
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```sh
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```sh
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
