@@ -61,12 +61,15 @@ The application will use a unified set of CSS variables that each component resp
 *   `--color-bg`: Main background color.
 *   `--color-primary`: Main accent color.
 *   `--color-surface`: Card/Cell background.
+*   `--color-text`: Primary text color.
+*   `--effect-primary`: Theme-specific effects (e.g., shadows or glows).
 *   `--border-weight`: Global border thickness.
 *   `--border-radius`: Global corner roundness.
-*   `--font-main`: Primary typeface.
+*   `--font-main`: Primary typeface with theme-specific fallbacks.
 
 ### 3.3 State-Driven Skinning
-*   The `+layout.svelte` will apply a theme class (e.g., `theme-pop`, `theme-synth`, `theme-matrix`) to the main container based on the current route.
+*   The `themeStore` will be a **derived store** from `$page.url.pathname`, ensuring the theme automatically switches based on the current route (e.g., `/killer-sudoku` -> `theme-pop`).
+*   The `+layout.svelte` will apply the corresponding theme class to the main container.
 *   Svelte's `crossfade` or simple `transition` directives will be used to animate the "morph" between themes, creating a satisfying "boot-up" feel when switching games.
 
 ## 4. Implementation Goals
