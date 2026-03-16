@@ -2,6 +2,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { themeStore } from '$lib/stores/theme';
 	import '$lib/styles/themes.css';
+	import Navigation from '$lib/components/Navigation.svelte';
 
 	let { children } = $props();
 </script>
@@ -11,7 +12,10 @@
 </svelte:head>
 
 <div class="app-wrapper {$themeStore}">
-	{@render children()}
+	<Navigation />
+	<div class="content-area">
+		{@render children()}
+	</div>
 </div>
 
 <style>
@@ -26,5 +30,12 @@
 		color: var(--color-text);
 		font-family: var(--font-main);
 		transition: background-color 0.4s ease, color 0.4s ease;
+		display: flex;
+	}
+
+	.content-area {
+		margin-left: 70px;
+		flex-grow: 1;
+		width: calc(100vw - 70px);
 	}
 </style>
