@@ -1,0 +1,91 @@
+:root {
+	/* Default / Hub Theme */
+	--theme-hub-bg: #f8f9fa;
+	--theme-hub-primary: #007bff;
+	--theme-hub-surface: #ffffff;
+	--theme-hub-text: #212529;
+	--theme-hub-border-weight: 1px;
+	--theme-hub-border-radius: 8px;
+	--theme-hub-font: system-ui, -apple-system, sans-serif;
+	--theme-hub-effect: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+	/* Playful Pop (Sudoku) */
+	--theme-pop-bg: #ffde59;
+	--theme-pop-primary: #b30000;
+	--theme-pop-surface: #ffffff;
+	--theme-pop-text: #000000;
+	--theme-pop-border-weight: 3px;
+	--theme-pop-border-radius: 12px;
+	--theme-pop-font: 'Inter', system-ui, sans-serif;
+	--theme-pop-effect: 6px 6px 0px rgba(0, 0, 0, 0.1);
+	--theme-pop-cage-1: rgba(179, 0, 0, 0.45);
+	--theme-pop-cage-2: rgba(0, 123, 255, 0.45);
+	--theme-pop-cage-3: rgba(40, 167, 69, 0.45);
+	--theme-pop-cage-4: rgba(255, 193, 7, 0.45);
+
+	/* Synthwave (Sokoban) */
+	--theme-synth-bg: #050510;
+	--theme-synth-primary: #00ffff;
+	--theme-synth-surface: #050510;
+	--theme-synth-text: #00ffff;
+	--theme-synth-border-weight: 1px;
+	--theme-synth-border-radius: 0px;
+	--theme-synth-font: 'Orbitron', sans-serif;
+	--theme-synth-effect: 0 0 15px rgba(0, 255, 255, 0.4);
+	--theme-synth-accent: #ff00ff;
+
+	/* Matrix (GoL) */
+	--theme-matrix-bg: #000000;
+	--theme-matrix-primary: #00ff00;
+	--theme-matrix-surface: #000000;
+	--theme-matrix-text: #00ff00;
+	--theme-matrix-border-weight: 1px;
+	--theme-matrix-border-radius: 0px;
+	--theme-matrix-font: 'JetBrains Mono', 'Courier New', monospace;
+	--theme-matrix-effect: 0 0 8px rgba(0, 255, 0, 0.5);
+	--theme-matrix-dim: #003300;
+}
+
+.theme-hub {
+	--color-bg: var(--theme-hub-bg);
+	--color-primary: var(--theme-hub-primary);
+	--color-surface: var(--theme-hub-surface);
+	--color-text: var(--theme-hub-text);
+	--border-weight: var(--theme-hub-border-weight);
+	--border-radius: var(--theme-hub-border-radius);
+	--font-main: var(--theme-hub-font);
+	--effect-primary: var(--theme-hub-effect);
+}
+
+.theme-pop {
+	--color-bg: var(--theme-pop-bg);
+	--color-primary: var(--theme-pop-primary);
+	--color-surface: var(--theme-pop-surface);
+	--color-text: var(--theme-pop-text);
+	--border-weight: var(--theme-pop-border-weight);
+	--border-radius: var(--theme-pop-border-radius);
+	--font-main: var(--theme-pop-font);
+	--effect-primary: var(--theme-pop-effect);
+}
+
+.theme-synth {
+	--color-bg: var(--theme-synth-bg);
+	--color-primary: var(--theme-synth-primary);
+	--color-surface: var(--theme-synth-surface);
+	--color-text: var(--theme-synth-text);
+	--border-weight: var(--theme-synth-border-weight);
+	--border-radius: var(--theme-synth-border-radius);
+	--font-main: var(--theme-synth-font);
+	--effect-primary: var(--theme-synth-effect);
+}
+
+.theme-matrix {
+	--color-bg: var(--theme-matrix-bg);
+	--color-primary: var(--theme-matrix-primary);
+	--color-surface: var(--theme-matrix-surface);
+	--color-text: var(--theme-matrix-text);
+	--border-weight: var(--theme-matrix-border-weight);
+	--border-radius: var(--theme-matrix-border-radius);
+	--font-main: var(--theme-matrix-font);
+	--effect-primary: var(--theme-matrix-effect);
+}
