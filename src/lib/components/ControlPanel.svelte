@@ -30,6 +30,13 @@
 		};
 	});
 
+	// Reactively sync input value when editing starts
+	$: if ($gridStore.showSumModal && $gridStore.editingCageIndex !== null) {
+		cageSumInput = $gridStore.cages[$gridStore.editingCageIndex].sum;
+	} else if ($gridStore.showSumModal && $gridStore.editingCageIndex === null) {
+		cageSumInput = null;
+	}
+
 	function handleSolve() {
 		gridStore.setSolving(true);
 		worker.postMessage({
@@ -41,13 +48,25 @@
 	}
 
 	function triggerCageModal() {
-		cageSumInput = null;
 		gridStore.setShowSumModal(true);
 	}
 
 	function confirmCage() {
-		if (cageSumInput !== null && cageSumInput > 0) {
-			gridStore.addCage(cageSumInput);
+		const { min, max } = getCageBounds($gridStore.selectedCells.length);
+		if (cageSumInput !== null && cageSumInput >= min && cageSumInput <= max) {
+			if ($gridStore.editingCageIndex !== null) {
+				gridStore.updateCage($gridStore.editingCageIndex, cageSumInput, $gridStore.selectedCells);
+			} else {
+				gridStore.addCage(cageSumInput);
+			}
+            gridStore.setShowSumModal(false);
+		}
+	}
+
+	function handleDeleteCage() {
+		if ($gridStore.editingCageIndex !== null) {
+			gridStore.removeCage($gridStore.editingCageIndex);
+			gridStore.setShowSumModal(false);
 		}
 	}
 
@@ -62,6 +81,17 @@
 		if (type === 'cages') gridStore.resetCages();
 		showResetMenu = false;
 	}
+
+	function getCageBounds(size: number) {
+		let min = 0;
+		for (let i = 1; i <= size; i++) min += i;
+		let max = 0;
+		for (let i = 9; i > 9 - size; i--) max += i;
+		return { min, max };
+	}
+
+	$: bounds = getCageBounds($gridStore.selectedCells.length);
+	$: isSumValid = cageSumInput !== null && cageSumInput >= bounds.min && cageSumInput <= bounds.max;
 </script>
 
 <div class="controls">
@@ -129,19 +159,24 @@
 {#if $gridStore.showSumModal}
 	<div class="modal-backdrop" on:click={cancelCage}>
 		<div class="modal-content" on:click|stopPropagation>
-			<h4>New Cage Sum</h4>
-			<p>Selected cells: {$gridStore.selectedCells.length}</p>
+			<h4>{$gridStore.editingCageIndex !== null ? 'Edit Cage' : 'New Cage Sum'}</h4>
+			<p>Selected cells: <strong>{$gridStore.selectedCells.length}</strong></p>
+			<p class="range-info">Allowed range: <strong>{bounds.min} - {bounds.max}</strong></p>
 			<input
 				type="number"
 				bind:value={cageSumInput}
 				placeholder="Enter sum"
-				on:keydown={(e) => e.key === 'Enter' && confirmCage()}
+				on:keydown={(e) => e.key === 'Enter' && isSumValid && confirmCage()}
 				autofocus
+				class:invalid={cageSumInput !== null && !isSumValid}
 			/>
 			<div class="modal-actions">
 				<button on:click={cancelCage}>Cancel</button>
-				<button on:click={confirmCage} class="primary" disabled={!cageSumInput || cageSumInput <= 0}>
-					Confirm
+				{#if $gridStore.editingCageIndex !== null}
+					<button on:click={handleDeleteCage} class="danger">Delete</button>
+				{/if}
+				<button on:click={confirmCage} class="primary" disabled={!isSumValid}>
+					{$gridStore.editingCageIndex !== null ? 'Update' : 'Confirm'}
 				</button>
 			</div>
 		</div>
@@ -150,12 +185,12 @@
 
 <style>
 	.controls {
-		padding: 20px;
-		background: #fff;
-		border-radius: 12px;
-		width: 250px;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-		border: 1px solid #eee;
+		padding: 24px;
+		background: var(--color-surface);
+		border-radius: var(--border-radius);
+		width: 280px;
+		box-shadow: var(--effect-primary);
+		border: var(--border-weight) solid var(--color-text);
 	}
 	.section {
 		margin-bottom: 24px;
@@ -165,90 +200,100 @@
 		margin-bottom: 12px;
 		font-size: 0.85rem;
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: #888;
+		letter-spacing: 0.1em;
+		color: var(--color-text);
+		opacity: 0.6;
+		font-weight: 900;
 	}
 	button {
 		display: block;
 		width: 100%;
-		padding: 10px;
-		margin-bottom: 8px;
+		padding: 12px;
+		margin-bottom: 10px;
 		cursor: pointer;
-		border: 1px solid #ddd;
-		background: white;
-		border-radius: 6px;
-		font-weight: 500;
+		border: var(--border-weight) solid var(--color-text);
+		background: var(--color-surface);
+		border-radius: calc(var(--border-radius) / 2);
+		font-weight: 900;
+		font-size: 0.9rem;
 		transition: all 0.2s;
 		text-align: center;
+		color: var(--color-text);
 	}
 	button:hover:not(:disabled) {
-		background: #f8f8f8;
-		border-color: #ccc;
+		background: var(--color-bg);
+		transform: translate(-2px, -2px);
+		box-shadow: 2px 2px 0 var(--color-text);
 	}
 	button.active {
-		background: #e7f3ff;
-		border-color: #007bff;
-		color: #007bff;
+		background: var(--color-primary);
+		color: white;
 	}
 	button.primary {
-		background: #007bff;
+		background: var(--color-primary);
 		color: white;
-		border-color: #007bff;
 	}
 	button.primary:hover:not(:disabled) {
-		background: #0056b3;
+		background: var(--color-primary);
+		filter: brightness(1.1);
+	}
+	button.danger {
+		color: var(--color-primary);
+		border-color: var(--color-primary);
+	}
+	button.danger:hover {
+		background: rgba(179, 0, 0, 0.05);
 	}
 	button:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+		filter: grayscale(1);
 	}
 	select {
 		width: 100%;
 		padding: 10px;
 		margin-bottom: 12px;
-		border-radius: 6px;
-		border: 1px solid #ddd;
+		border-radius: calc(var(--border-radius) / 2);
+		border: var(--border-weight) solid var(--color-text);
+		background: var(--color-surface);
+		font-weight: bold;
 	}
 	.checkbox-label {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 10px;
 		margin-bottom: 15px;
 		font-size: 0.9rem;
-		color: #444;
+		color: var(--color-text);
 		cursor: pointer;
+		font-weight: bold;
 	}
 
 	/* Reset Section */
 	.reset-toggle {
 		font-size: 0.9rem;
-		color: #666;
-		background: #f9f9f9;
+		background: var(--color-bg);
+		border-style: dashed;
 	}
 	.reset-menu {
 		margin-top: 8px;
 		padding: 10px;
-		background: #fdfdfd;
-		border: 1px solid #eee;
-		border-radius: 8px;
+		background: var(--color-surface);
+		border: var(--border-weight) solid var(--color-text);
+		border-radius: var(--border-radius);
 	}
 	.reset-menu button {
-		padding: 6px;
+		padding: 8px;
 		font-size: 0.85rem;
-		margin-bottom: 4px;
-	}
-	.reset-menu button.danger {
-		color: #dc3545;
-		border-color: #ffcfcf;
-	}
-	.reset-menu button.danger:hover {
-		background: #fff5f5;
+		margin-bottom: 6px;
+		border-width: 1px;
 	}
 
 	.stats p {
-		margin: 6px 0;
-		font-size: 0.9rem;
-		color: #555;
+		margin: 8px 0;
+		font-size: 0.95rem;
+		color: var(--color-text);
+		font-weight: bold;
 	}
 
 	/* Modal Styles */
@@ -258,39 +303,53 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background: rgba(0, 0, 0, 0.4);
+		background: rgba(0, 0, 0, 0.6);
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		z-index: 1000;
-		backdrop-filter: blur(2px);
+		backdrop-filter: blur(4px);
 	}
 	.modal-content {
-		background: white;
-		padding: 24px;
-		border-radius: 12px;
-		width: 300px;
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+		background: var(--color-surface);
+		padding: 30px;
+		border-radius: var(--border-radius);
+		width: 320px;
+		box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+		border: var(--border-weight) solid var(--color-text);
 	}
 	.modal-content h4 {
-		margin: 0 0 8px 0;
+		margin: 0 0 12px 0;
+		font-size: 1.2rem;
+		font-weight: 900;
 	}
 	.modal-content p {
-		font-size: 0.85rem;
-		color: #666;
-		margin-bottom: 16px;
+		font-size: 0.9rem;
+		color: var(--color-text);
+		margin-bottom: 6px;
+		font-weight: bold;
+	}
+	.range-info {
+		margin-bottom: 20px !important;
+		opacity: 0.7;
 	}
 	.modal-content input {
 		width: 100%;
 		padding: 12px;
-		margin-bottom: 20px;
-		border: 1px solid #ddd;
-		border-radius: 6px;
-		font-size: 1.1rem;
+		margin-bottom: 24px;
+		border: var(--border-weight) solid var(--color-text);
+		border-radius: calc(var(--border-radius) / 2);
+		font-size: 1.2rem;
 		box-sizing: border-box;
+		font-weight: 900;
+	}
+	.modal-content input.invalid {
+		border-color: var(--color-primary);
+		background-color: rgba(179, 0, 0, 0.05);
+		color: var(--color-primary);
 	}
 	.modal-actions {
 		display: flex;
-		gap: 10px;
+		gap: 12px;
 	}
 </style>
